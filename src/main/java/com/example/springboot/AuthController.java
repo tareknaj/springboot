@@ -26,8 +26,15 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        try {
+
+      
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userRepository.save(user);
+        }
+        catch(Exception exp) {
+            return ResponseEntity.ok(exp.getMessage()); 
+        }
         return ResponseEntity.ok("User registered");
     }
 
